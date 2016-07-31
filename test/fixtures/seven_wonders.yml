@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  gamenumber: 1
+  name: MyString
+  boardname: MyString
+  score: 1
+  win: false
+  date: 2016-07-31 15:11:53
+
+two:
+  gamenumber: 1
+  name: MyString
+  boardname: MyString
+  score: 1
+  win: false
+  date: 2016-07-31 15:11:53
