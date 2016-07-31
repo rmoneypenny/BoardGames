@@ -1,6 +1,11 @@
 
 <%=form_for :seven_wonder, url: seven_wonders_path do |f| %>
 	<p>
+		<%= f.label :gamenumber %>
+		<br>
+		<%= f.text_field :gamenumber %>
+	</p>
+	<p>
 		<%= f.label :name %>
 		<br>
 		<%= f.text_field :name %>
@@ -8,17 +13,22 @@
 	<p>
 		<%= f.label :boardname %>
 		<br>
-		<%= f.text_field :name %>
+		<%= f.text_field :boardname %>
 	</p>
 	<p>
 		<%= f.label :score %>
 		<br>
-		<%= f.text_field :name %>
+		<%= f.text_field :score %>
 	</p>
 	<p>
 		<%= f.label :win %>
 		<br>
-		<%= f.text_field :name %>
+		<%= f.text_field :win %>
+	</p>
+	<p>
+		<%= f.label :date %>
+		<br>
+		<%= f.text_field :date, value: DateTime.now, :readonly => true %>
 	</p>
 	<p>
 		<%= f.submit %>
