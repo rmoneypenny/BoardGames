@@ -1,0 +1,2 @@
+class SwboardnamesController < ApplicationController
+end

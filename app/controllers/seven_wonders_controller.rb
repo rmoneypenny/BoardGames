@@ -1,6 +1,7 @@
 class SevenWondersController < ApplicationController
   
   def new
+    @seven_wonder = SevenWonder.new()
   end
 
   def create
@@ -12,6 +13,7 @@ class SevenWondersController < ApplicationController
 
   def show
   	@seven_wonder = SevenWonder.find(params[:id])
+    @swboardname = Swboardname.find(2)
   end
 
   private

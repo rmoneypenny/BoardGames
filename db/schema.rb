@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160731191152) do
+ActiveRecord::Schema.define(version: 20160804234718) do
+
+  create_table "s_wboardnames", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "seven_wonders", force: :cascade do |t|
     t.integer  "gamenumber"
@@ -19,6 +25,12 @@ ActiveRecord::Schema.define(version: 20160731191152) do
     t.integer  "score"
     t.boolean  "win"
     t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "swboardnames", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

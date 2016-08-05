@@ -1,0 +1,2 @@
+module SwboardnamesHelper
+end

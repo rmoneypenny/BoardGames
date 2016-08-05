@@ -1,0 +1,2 @@
+class Swboardname < ApplicationRecord
+end
