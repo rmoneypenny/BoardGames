@@ -1,5 +1,5 @@
 class SevenWondersController < ApplicationController
-  
+
   def new
     @seven_wonder = SevenWonder.new()
   end
@@ -20,5 +20,7 @@ class SevenWondersController < ApplicationController
   	def seven_wonder_params
   		params.require(:seven_wonder).permit(:gamenumber, :name, :boardname, :score, :win, :date)
   	end
+
+
 
 end

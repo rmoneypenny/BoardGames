@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'seven_wonders/new'
+  #get 'seven_wonders#index'
 
   resources :seven_wonders
   resources :swboardnames
