@@ -1,0 +1,86 @@
+
+
+<br> 
+Please select players
+<%= form_tag players_seven_wonders_path do %>
+	<br>
+	<% @seven_wonder.getnames.each do |name| %>
+		<%= check_box_tag("names[]", name) %>
+		<%= label_tag("names[]", name) %>
+		<br>
+	<% end %>
+		<%= submit_tag "Confirm" %>
+<% end %>
+
+<br>
+<br>
+
+
+<% if @names %>
+	<%= form_tag(review_seven_wonders_path, method: "post") do %>
+		<% @names.each do |name|%>
+			<%= label_tag("selectedname[]", "Name: ") %>
+			<%= text_field_tag("name[]", name, readonly: true) %>
+			<br>
+			<%= label_tag("boardname[]", "Boardname: ") %>
+			<%= text_field_tag("boardname[]", @seven_wonder.playerboards(name), readonly: true) %>
+			<br>
+			<%= label_tag("score[]", "Score: ") %>
+			<%= text_field_tag("score[]") %>
+			<br>
+			<br>
+		<% end %>	
+		<%= submit_tag("Submit") %>	
+	<% end %>
+	<br>	
+<% end %>
+
+<% if false %>
+
+
+
+
+
+
+
+
+
+
+
+
+<%=form_for @seven_wonder do |f| %>
+	<p>
+		<%= f.label :gamenumber %>
+		<br>
+		<%= f.text_field :gamenumber %>
+	</p>
+	<p>
+		<%= f.label :name %>
+		<br>
+		<%= f.text_field :name %>
+	</p>
+	<p>
+		<%= f.label :boardname %>
+		<br>
+		<%= f.text_field :boardname %>
+	</p>
+	<p>
+		<%= f.label :score %>
+		<br>
+		<%= f.text_field :score %>
+	</p>
+	<p>
+		<%= f.label :win %>
+		<br>
+		<%= f.text_field :win %>
+	</p>
+	<p>
+		<%= f.label :date %>
+		<br>
+		<%= f.text_field :date, value: DateTime.now, :readonly => true %>
+	</p>
+	<p>
+		<%= f.submit %>
+<% end %>
+
+<% end %>

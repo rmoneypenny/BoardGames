@@ -1,42 +1,3 @@
-<%= form_for @seven_wonder do |f| %>
-	<% @seven_wonder.getnames.each do |name| %>
-		<br>
-		<%= check_box_tag(:hel)  %>
-		<%= label_tag(:hel, name) %>
-	<% end %>
-<% end %>
-
-
-<% @seven_wonder.selectednames.each do |name| %>
-	<br>
-	<%= name %>
-<% end %>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<% if false %>
-
-
-
 <%=form_for @seven_wonder do |f| %>
 	<p>
 		<%= f.label :gamenumber %>
@@ -46,7 +7,7 @@
 	<p>
 		<%= f.label :name %>
 		<br>
-		<%= f.text_field :name %>
+		<%= f.text_field :name, :value => @name %>
 	</p>
 	<p>
 		<%= f.label :boardname %>
@@ -72,4 +33,3 @@
 		<%= f.submit %>
 <% end %>
 
-<% end %>
