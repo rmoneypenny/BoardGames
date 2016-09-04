@@ -1,5 +1,7 @@
 class SevenWonder < ApplicationRecord
 
+	validates :score, presence: true
+
 	def getnames
 		SevenWonder.pluck("DISTINCT name")
 	end
@@ -24,7 +26,12 @@ class SevenWonder < ApplicationRecord
 		player.select(:boardname).each do |n|
 			a.push(n.boardname)
 		end
-		self.allboards - a.uniq
+		s = self.allboards - a.uniq
+		if s.empty?
+			self.allboards
+		else
+			self.allboards - a.uniq
+		end
 	end
 
 	def getNextGameNumber
@@ -33,6 +40,84 @@ class SevenWonder < ApplicationRecord
 	end
 
 	def submitGame(name, boardname, score)
+		if score
+			winloss = self.highestScore(score)
+			games = name.zip(boardname, score, winloss)
+			s = self.getNextGameNumber
+			games.each do |g|
+				SevenWonder.create(gamenumber: s, name: g[0], boardname: g[1], score: g[2], win: g[3], date: DateTime.now)
+			end
+		end
+
+
+
+	end
+
+	def highestScore(score)
+		score.map! {|s| s.to_i}
+		highest = score.sort.last
+		highestIndex = score.index(highest)
+		winloss = []
+		score.size.times do
+			winloss.push(false)
+		end
+		winloss[highestIndex] = true
+		winloss
+	end
+
+	def getTodaysGames
+		s = SevenWonder.where(:date => (1.days.ago..DateTime.now))
+		gamenumbers = []
+		names = []
+		boardnames = []
+		scores = []
+		winloss = []
+		games = []
+		wl = []
+		s.each do |r|
+			gamenumbers.push(r.gamenumber)
+			names.push(r.name)
+			boardnames.push(r.boardname)
+			scores.push(r.score)
+			wl.push(r.win)
+		end
+		wl.each do |w|
+			if w
+				winloss.push("win")
+			else
+				winloss.push("lose")
+			end
+		end
+		games = gamenumbers.zip(names, boardnames, scores, winloss)
+		games
+
+	end
+
+	def winners
+		games = self.getTodaysGames
+		winner = []
+		winnercount = Hash.new(0)
+		games.each do |w|
+			if w[4] == "win"
+				winner.push(w[1])
+			end
+		end
+		winner.each do |r|
+			winnercount[r] += 1
+		end
+		winnercount
+	end
+
+	def gameHistory
+		n = SevenWonder.last.gamenumber
+		s = SevenWonder.where(gamenumber: n-10..n)
+		s
+	end
+
+end
+
+
+=begin
 		a = []
 		n = name.size
 		i = 0
@@ -45,6 +130,4 @@ class SevenWonder < ApplicationRecord
 			s.save
 			i += 1
 		end
-	end
-
-end
+=end

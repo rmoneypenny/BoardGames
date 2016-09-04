@@ -1,8 +1,43 @@
 
 
-<%= cookies[:selectedname] %>
+
+<table>
+	<tr>
+		<th> Gamenumber </th>
+		<th> Name </th>
+		<th> Boardname </th>
+		<th> Score </th>
+		<th> Win/Loss </th>
+	</tr>
+	<% @seven_wonder.getTodaysGames.each do |player| %>
+	<tr>
+		<% player.each do |s| %>
+			<td> <%= s %> </td>
+		<% end %>
+	</tr>
+	<% end %>
+
+</table>
 <br>
-<%= cookies[:boardname] %>
 <br>
-<%= cookies[:score] %>
+
+<% @seven_wonder.winners.each do |name, count| %>
+	<br>
+	<%= "#{name}: #{count}" %>
+	<% end %>
+	<br>
+	<br>
+<%= link_to "Play Again", players_seven_wonders_path %>
 <br>
+<%= link_to "Main", seven_wonders_path %>
+
+
+<!-- <br>
+<br>
+<% @seven_wonder.getTodaysGames.each do |player| %>
+<br>
+<br>
+		<%= player.each do |s| %>
+		 <%= s %> 
+		<% end %>
+	<% end %> -->

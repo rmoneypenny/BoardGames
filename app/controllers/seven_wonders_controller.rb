@@ -1,6 +1,9 @@
 class SevenWondersController < ApplicationController
 
 
+  def index
+
+  end
 
   def new
     @seven_wonder = SevenWonder.new()
@@ -28,9 +31,18 @@ class SevenWondersController < ApplicationController
   def review
     @seven_wonder = SevenWonder.new()
     @seven_wonder.submitGame(params[:name], params[:boardname], params[:score])
+
     #cookies[:selectedname] ||= {value: params[:name], expires: 1.hour.from_now}
     #cookies[:boardname] ||= {value: params[:boardname], expires: 1.hour.from_now}
     #cookies[:score] ||= {value: params[:score], expires: 1.hour.from_now}
+  end
+
+  def history
+    @seven_wonder = SevenWonder.new()
+  end
+
+  def stats
+
   end
 
   private

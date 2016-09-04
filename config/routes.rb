@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   		post "players"
   		get "review"
   		post "review"
-  	end
+      get "history"
+      post "history"
+  	  get "stats"
+      post "stats"
+    end
   end
   resources :swboardnames
 
