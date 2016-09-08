@@ -114,6 +114,32 @@ class SevenWonder < ApplicationRecord
 		s
 	end
 
+	def boardwinper
+		a = self.allboards
+		p = []
+		a.each do |b|
+			t = SevenWonder.where(boardname: b).count
+			w = SevenWonder.where(boardname: b, win: true).count
+			puts t
+			puts w
+			p.push(((w.to_f/t.to_f)*100).round(1))
+		end
+		winp = a.zip(p)
+		winp.sort_by{|x,y|y}.reverse
+	end
+
+	def winper
+		names = self.getnames
+		p = []
+		names.each do |n|
+			t = SevenWonder.where(name: n).count
+			w = SevenWonder.where(name: n, win: true).count
+			p.push(((w.to_f/t.to_f)*100).round(1))
+		end
+		winp = names.zip(p)
+		winp.sort_by{|x,y|y}.reverse
+	end
+
 end
 
 

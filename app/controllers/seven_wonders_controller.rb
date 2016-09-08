@@ -2,7 +2,7 @@ class SevenWondersController < ApplicationController
 
 
   def index
-
+    @seven_wonder = SevenWonder.new()
   end
 
   def new
@@ -42,7 +42,10 @@ class SevenWondersController < ApplicationController
   end
 
   def stats
-
+    @seven_wonder = SevenWonder.new()
+    @highestScore = SevenWonder.maximum('score')
+    @name = SevenWonder.select(:name).where(score: @highestScore)
+    @winper = @seven_wonder.winper()
   end
 
   private
