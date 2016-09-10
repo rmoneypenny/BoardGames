@@ -11,6 +11,10 @@ Rails.application.routes.draw do
       post "history"
   	  get "stats"
       post "stats"
+      get "user"
+      post "user"
+      get "createPlayer"
+      post "createPlayer"
     end
   end
   resources :swboardnames

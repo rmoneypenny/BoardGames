@@ -20,8 +20,9 @@ class SevenWondersController < ApplicationController
 
   def players
     @seven_wonder = SevenWonder.new()
-    #cookies[:name] = params[:names]
+    @player_names = Player.new()  
     @names = params[:names]
+    @all = params[:all]
   end
 
   def show
@@ -46,6 +47,15 @@ class SevenWondersController < ApplicationController
     @highestScore = SevenWonder.maximum('score')
     @name = SevenWonder.select(:name).where(score: @highestScore)
     @winper = @seven_wonder.winper()
+  end
+
+  def createPlayer
+    @newPlayer = Player.create(name: params[:name])
+    redirect_to user_seven_wonders_path
+  end
+
+  def user
+    @seven_wonder = SevenWonder.new()
   end
 
   private

@@ -1,0 +1,32 @@
+
+<table>
+	<tr>
+		<th> Name </th>
+		<th> Highest </th>
+		<th> Lowest </th>
+		<th> Boardname </th>
+	</tr>
+	<% @seven_wonder.playerStats.each do |stat| %>
+	<tr>
+		<td> <%= stat[0] %> </td>
+		<td> <%= stat[1] %> </td>
+		<td> <%= stat[2] %> </td>
+		<td> <%= stat[3][0] %> </td>
+
+	</tr>
+	<% end %>
+</table>
+
+<br>
+<br>
+<br>
+Add Player
+<br>
+<%= form_tag(createPlayer_seven_wonders_path, method: "post") do %>
+	<%= label_tag "Name: " %>
+	<%= text_field_tag "name" %>
+	<br>
+	<%= submit_tag "Confirm" %>
+<% end %>
+<br>
+<%= link_to "Back", seven_wonders_path %>

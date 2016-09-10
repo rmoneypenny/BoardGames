@@ -140,6 +140,38 @@ class SevenWonder < ApplicationRecord
 		winp.sort_by{|x,y|y}.reverse
 	end
 
+	def playerStats
+		names = self.getnames
+		highest = []
+		lowest = []
+		board = []
+		names.each do |n|
+			highest.push(SevenWonder.where(name: n).maximum(:score))
+			lowest.push(SevenWonder.where(name: n).minimum(:score))
+			board.push(self.bestPlayerBoard(n))
+		end
+		names.zip(highest,lowest,board)
+	end
+
+	def bestPlayerBoard(name)
+		winningGames = SevenWonder.where(name: name, win: true)
+		winningBoards = []
+		winningGames.each do |n|
+			winningBoards.push(n.boardname)
+		end
+		winningBoards.sort
+		uniqueboards = winningBoards.uniq
+		count = 0
+		name = ""
+		uniqueboards.each do |u|
+			if winningBoards.count(u) > count
+				count = winningBoards.count(u)
+				name = u
+			end
+		end
+		best = [name,count]
+	end
+
 end
 
 

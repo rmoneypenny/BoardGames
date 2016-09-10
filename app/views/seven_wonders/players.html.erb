@@ -1,15 +1,18 @@
 
-
+<% args = (@all? @player_names.getnames : @seven_wonder.getnames) %>
 <br> 
 Please select players
 <%= form_tag players_seven_wonders_path do %>
-	<br>
-	<% @seven_wonder.getnames.each do |name| %>
+<br>
+	<% args.each do |name| %>
 		<%= check_box_tag("names[]", name) %>
-		<%= label_tag("names[]", name) %>
+		<%= label_tag(name) %>
 		<br>
 	<% end %>
-		<%= submit_tag "Confirm" %>
+	<%= check_box_tag("all", "allUsers") %>
+	<%= label_tag("All Players") %>
+	<br>
+	<%= submit_tag "Confirm" %>
 <% end %>
 
 <br>
@@ -19,13 +22,13 @@ Please select players
 <% if @names %>
 	<%= form_tag(review_seven_wonders_path, method: "post") do %>
 		<% @names.each do |name|%>
-			<%= label_tag("selectedname[]", "Name: ") %>
+			<%= label_tag("Name: ") %>
 			<%= text_field_tag("name[]", name, readonly: true) %>
 			<br>
-			<%= label_tag("boardname[]", "Boardname: ") %>
+			<%= label_tag("Boardname: ") %>
 			<%= text_field_tag("boardname[]", @seven_wonder.playerboards(name), readonly: true) %>
 			<br>
-			<%= label_tag("score[]", "Score: ") %>
+			<%= label_tag("Score: ") %>
 			<%= text_field_tag("score[]") %>
 			<br>
 			<br>
