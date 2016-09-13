@@ -1,25 +1,11 @@
 
-<% args = (@all? @player_names.getnames : @seven_wonder.getnames) %>
-<br> 
-Please select players
-<%= form_tag players_seven_wonders_path do %>
-<br>
-	<% args.each do |name| %>
-		<%= check_box_tag("names[]", name) %>
-		<%= label_tag(name) %>
-		<br>
-	<% end %>
-	<%= check_box_tag("all", "allUsers") %>
-	<%= label_tag("All Players") %>
-	<br>
-	<%= submit_tag "Confirm" %>
-<% end %>
+<%= render partial: "nameList", locals: {:pathname => players_seven_wonders_path} %>
+
 
 <br>
 <br>
 
-
-<% if @names %>
+<% if @names && @names.size > 1 && @names.size <9 %>
 	<%= form_tag(review_seven_wonders_path, method: "post") do %>
 		<% @names.each do |name|%>
 			<%= label_tag("Name: ") %>
@@ -36,7 +22,9 @@ Please select players
 		<%= submit_tag("Submit") %>	
 	<% end %>
 	<br>	
+<% elsif @names %>
+	<%= "2-8 players needed" %>
 <% end %>
 <br>
 <br>
-<%= link_to "Back", seven_wonders_path %>
+<%= link_to "Back", boardgame_index_path(:game => "SevenWonders") %>

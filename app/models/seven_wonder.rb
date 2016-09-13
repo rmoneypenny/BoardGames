@@ -2,8 +2,12 @@ class SevenWonder < ApplicationRecord
 
 	validates :score, presence: true
 
-	def getnames
-		SevenWonder.pluck("DISTINCT name")
+	def getnames(all="no")
+		if all == "all"
+			SevenWonder.pluck("DISTINCT name")
+		else
+			SevenWonder.where(:date => (30.days.ago..DateTime.now)).pluck("DISTINCT name")
+		end
 	end
 
 	def allboards
@@ -18,7 +22,6 @@ class SevenWonder < ApplicationRecord
 		s = SevenWonder.where(:name => name)
 		boards = self.uniqueboards(s)
 		boards[rand(boards.size)]
-		#SevenWonder.pluck("DISTINCT name")
 	end
 
 	def uniqueboards(player)
@@ -56,12 +59,16 @@ class SevenWonder < ApplicationRecord
 	def highestScore(score)
 		score.map! {|s| s.to_i}
 		highest = score.sort.last
-		highestIndex = score.index(highest)
 		winloss = []
+		i=0
 		score.size.times do
-			winloss.push(false)
+			if score[i] == highest
+				winloss.push(true)
+			else
+				winloss.push(false)
+			end
+			i+=1
 		end
-		winloss[highestIndex] = true
 		winloss
 	end
 
@@ -141,7 +148,7 @@ class SevenWonder < ApplicationRecord
 	end
 
 	def playerStats
-		names = self.getnames
+		names = self.getnames("all")
 		highest = []
 		lowest = []
 		board = []
@@ -150,7 +157,7 @@ class SevenWonder < ApplicationRecord
 			lowest.push(SevenWonder.where(name: n).minimum(:score))
 			board.push(self.bestPlayerBoard(n))
 		end
-		names.zip(highest,lowest,board)
+		names.zip(highest,lowest,board).sort_by{|x,y,z,a| y}.reverse
 	end
 
 	def bestPlayerBoard(name)
@@ -171,6 +178,12 @@ class SevenWonder < ApplicationRecord
 		end
 		best = [name,count]
 	end
+
+	def allPlayerBoards(name)
+		s = SevenWonder.where(name: name)
+		boards = self.uniqueboards(s)
+		boards
+	end 
 
 end
 

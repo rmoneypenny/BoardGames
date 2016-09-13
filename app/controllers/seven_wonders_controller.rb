@@ -58,6 +58,11 @@ class SevenWondersController < ApplicationController
     @seven_wonder = SevenWonder.new()
   end
 
+  def boardList
+    @seven_wonder = SevenWonder.new()
+    @names = params[:names]
+  end
+
   private
   	def seven_wonder_params
   		params.require(:seven_wonder).permit(:gamenumber, :name, :boardname, :score, :win, :date)

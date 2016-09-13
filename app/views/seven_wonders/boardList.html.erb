@@ -1,0 +1,23 @@
+<%= render partial: "nameList", locals: {:pathname => boardList_seven_wonders_path} %>
+
+
+<% if @names %>
+	<table>
+		<tr>
+			<th> Boardname </th>
+			<th> Players </th>
+		</tr>
+		<% @seven_wonder.allboards.each do |board| %>
+			<tr>
+				<td> <%= board %> </td>
+				<% @names.each do |name| %>
+					<td> <%= name if @seven_wonder.allPlayerBoards(name).include?(board) %> </td>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+
+<% end %>
+<br>
+<br>
+<%= link_to "Back", boardgame_index_path(:game => "SevenWonders") %>

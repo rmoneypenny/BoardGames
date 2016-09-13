@@ -1,0 +1,17 @@
+
+
+<% args = (@all? @player_names.getnames : @seven_wonder.getnames) %>
+<br> 
+Please select players
+<%= form_tag @pathname do %>
+<br>
+	<% args.each do |name| %>
+		<%= check_box_tag("names[]", name) %>
+		<%= label_tag(name) %>
+		<br>
+	<% end %>
+	<%= check_box_tag("all", "allUsers") %>
+	<%= label_tag("More Players") %>
+	<br>
+	<%= submit_tag "Confirm" %>
+<% end %>
