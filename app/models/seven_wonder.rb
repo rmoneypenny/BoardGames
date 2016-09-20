@@ -185,6 +185,10 @@ class SevenWonder < ApplicationRecord
 		boards
 	end 
 
+	def importCSV(file)
+
+	end
+
 end
 
 

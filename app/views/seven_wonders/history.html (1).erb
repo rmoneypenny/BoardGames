@@ -1,0 +1,32 @@
+
+
+<table>
+	<tr>
+		<th> Gamenumber </th>
+		<th> Date </th>
+		<th> Name </th>
+		<th> Boardname </th>
+		<th> Score </th>
+		<th> Win/Loss </th>
+	</tr>
+	<% @seven_wonder.gameHistory.each do |game| %>
+	<tr>
+		<td> <%= game.gamenumber %> </td>
+		<td> <%= game.date.in_time_zone("Eastern Time (US & Canada)").strftime("%b %d, %Y at %l:%M%p --") %> </td>
+		<td> <%= game.name %> </td>
+		<td> <%= game.boardname %> </td>
+		<td> <%= game.score %> </td>
+		<td> <% if game.win%> 
+			 	<%= "win" %>
+			 <% else %>
+			 	<%= "lose" %>
+			 <% end %>
+		</td>
+	</tr>
+	<% end %>
+
+</table>
+<br>
+<br>
+
+<%= link_to "Back", boardgame_index_path(:game => "SevenWonders") %>

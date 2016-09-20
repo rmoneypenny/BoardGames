@@ -1,0 +1,18 @@
+
+<%= "Highest Score: " %>
+<% @name.each do |n| %>
+	<%= n.name %>
+<% end %>
+<%= " " + @highestScore.to_s %>
+<br>
+<br>
+<%= "Highest Win%: #{@winper[0][0].to_s} #{@winper[0][1].to_s}%" %>
+<br>
+<br>
+<%= "Highest Board Win%: #{@seven_wonder.boardwinper[0][0]} #{@seven_wonder.boardwinper[0][1]}%"%>
+<br>
+<br>
+<%= "Number of Games Played: #{@seven_wonder.getNextGameNumber-1}" %>
+<br>
+<br>
+<%= link_to "Back", boardgame_index_path(:game => "SevenWonders") %>

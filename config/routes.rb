@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       post "createPlayer"
       get "boardList"
       post "boardList"
+      get "import"
+      post "import"
     end
   end
   resources :swboardnames

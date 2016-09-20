@@ -63,6 +63,12 @@ class SevenWondersController < ApplicationController
     @names = params[:names]
   end
 
+  def import
+    @boardname = Swboardname.new
+    @boardname.importCSV(params[:file])   
+    redirect_to boardList_seven_wonders_path
+  end
+
   private
   	def seven_wonder_params
   		params.require(:seven_wonder).permit(:gamenumber, :name, :boardname, :score, :win, :date)

@@ -1,0 +1,33 @@
+
+<% if @game == "SevenWonders" %>
+	
+	<p>
+
+	<%= link_to "New Game!", players_seven_wonders_path %>
+	<br>
+	<br>
+	<%= link_to "Last 10 Games", history_seven_wonders_path %>
+	<br>
+	<br>
+	<%= link_to "Stats", stats_seven_wonders_path %>
+	<br>
+	<br>
+	<%= link_to "Players", user_seven_wonders_path %>
+	<br>
+	<br>
+	<%= link_to "Board List", boardList_seven_wonders_path %>
+	<br>
+	<br>
+</p>
+
+<% end %>
+
+
+<br>
+<br>
+<%= form_tag(boardgame_index_path, method: "post") do %>
+	<%= select_tag(:game, options_for_select([['SevenWonders',"SevenWonders"],['ToDO',2]])) %>
+	<br>
+	<%= submit_tag "submit" %>
+<% end %>
+
