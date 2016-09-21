@@ -132,11 +132,10 @@ class SevenWonder < ApplicationRecord
 		a.each do |b|
 			t = SevenWonder.where(boardname: b).count
 			w = SevenWonder.where(boardname: b, win: true).count
-			puts t
-			puts w
-			p.push(((w.to_f/t.to_f)*100).round(1))
+			t == 0 ? p.push(0) : p.push(((w.to_f/t.to_f)*100).round(1))
 		end
 		winp = a.zip(p)
+		puts winp
 		winp.sort_by{|x,y|y}.reverse
 	end
 
@@ -193,7 +192,7 @@ class SevenWonder < ApplicationRecord
 	def importCSV(file)
 
 		CSV.foreach(file.path) do |line|
-			SevenWonder.create(gamenumber: line[0].to_i, name: line[1], boardname: line[2], score: line[3].to_i, win: line[4] == "true" ? true : false, date: DateTime.parse(line[5]).change(:offset => "-0400"))#.in_time_zone("Eastern Time (US & Canada)"))
+			SevenWonder.create(gamenumber: line[0].to_i, name: line[1], boardname: line[2], score: line[3].to_i, win: line[4] == "true" ? true : false, date: DateTime.parse(line[5]).change(:offset => "-0400"))
 		end
 	end
 
