@@ -11,7 +11,7 @@
 			<tr>
 				<td> <%= board %> </td>
 				<% @names.each do |name| %>
-					<td> <%= name if @seven_wonder.allPlayerBoards(name).include?(board) %> </td>
+					<td> <%= name if !@seven_wonder.allPlayerBoards(name).include?(board) %> </td>
 				<% end %>
 			</tr>
 		<% end %>
@@ -26,7 +26,7 @@
 <br>
 <br>
 <%=  form_tag import_seven_wonders_path, multipart: true do %>
-	<%= file_field_tag :file %>
+	<%= file_field_tag :bnfile %>
 	<%= submit_tag "Submit" %>
 <% end %>
 <br>

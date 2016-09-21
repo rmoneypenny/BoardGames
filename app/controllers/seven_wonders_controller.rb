@@ -65,8 +65,16 @@ class SevenWondersController < ApplicationController
 
   def import
     @boardname = Swboardname.new
-    @boardname.importCSV(params[:file])   
-    redirect_to boardList_seven_wonders_path
+    @seven_wonder = SevenWonder.new
+    @bnameFile = params[:bnfile]
+    @swFile = params[:swfile]
+    if @bnameFile
+      @boardname.importCSV(@bnameFile)   
+      redirect_to boardList_seven_wonders_path
+    elsif @swFile
+      @seven_wonder.importCSV(@swFile)   
+      redirect_to players_seven_wonders_path
+    end
   end
 
   private

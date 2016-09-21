@@ -9,8 +9,4 @@ class Swboardname < ApplicationRecord
 		end
 	end
 
-	def hello
-		puts "hi"
-	end
-
 end

@@ -1,5 +1,6 @@
 class SevenWonder < ApplicationRecord
 
+	require 'csv'
 	validates :score, presence: true
 
 	def getnames(all="no")
@@ -38,8 +39,12 @@ class SevenWonder < ApplicationRecord
 	end
 
 	def getNextGameNumber
-		s = SevenWonder.last.gamenumber
-		s += 1
+		s = SevenWonder.last
+		if s
+			s.gamenumber += 1
+		else
+			1
+		end
 	end
 
 	def submitGame(name, boardname, score)
@@ -187,7 +192,11 @@ class SevenWonder < ApplicationRecord
 
 	def importCSV(file)
 
+		CSV.foreach(file.path) do |line|
+			SevenWonder.create(gamenumber: line[0].to_i, name: line[1], boardname: line[2], score: line[3].to_i, win: line[4] == "true" ? true : false, date: DateTime.parse(line[5]).change(:offset => "-0400"))#.in_time_zone("Eastern Time (US & Canada)"))
+		end
 	end
+
 
 end
 
