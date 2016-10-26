@@ -46,7 +46,7 @@ class SevenWondersController < ApplicationController
     @seven_wonder = SevenWonder.new()
     @highestScore = SevenWonder.maximum('score')
     @name = SevenWonder.select(:name).where(score: @highestScore)
-    @winper = @seven_wonder.winper()
+    @winper = @seven_wonder.winper(@seven_wonder.getnames("all"),true).sort_by{|x,y|y}.reverse
   end
 
   def createPlayer
@@ -77,6 +77,14 @@ class SevenWondersController < ApplicationController
     elsif @swFile
       @seven_wonder.importCSV(@swFile)   
       redirect_to players_seven_wonders_path
+    end
+  end
+
+  def export
+    @seven_wonder = SevenWonder.select(:gamenumber, :name, :boardname, :score, :win, :date)
+    respond_to do |format|
+      format.html {redirect_to players_seven_wonders_path}
+      format.csv  {send_data @seven_wonder.to_csv}
     end
   end
 

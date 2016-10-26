@@ -1,6 +1,6 @@
 
 <%= render partial: "nameList", locals: {:pathname => players_seven_wonders_path} %>
-
+<% chance = 50 %>
 
 <br>
 <br>
@@ -11,8 +11,13 @@
 			<%= label_tag("Name: ") %>
 			<%= text_field_tag("name[]", name, readonly: true) %>
 			<br>
-			<%= label_tag("Boardname: ") %>
-			<%= text_field_tag("boardname[]", @seven_wonder.playerboards(name), readonly: true) %>
+			<% if rand(100) < chance %>
+				<%= label_tag("Boardname: ") %>
+				<%= select_tag("boardname[]", options_for_select(@seven_wonder.allboards)) %>
+			<% else %>
+				<%= label_tag("Boardname: ") %>
+				<%= text_field_tag("boardname[]", @seven_wonder.playerboards(name), readonly: true) %>
+			<% end %>
 			<br>
 			<%= label_tag("Score: ") %>
 			<%= text_field_tag("score[]") %>
@@ -38,3 +43,10 @@
 	<%= file_field_tag :swfile %>
 	<%= submit_tag "Submit" %>
 <% end %>
+<br>
+<br>
+<%= "Export Games" %>
+<%= link_to "Export", export_seven_wonders_path(format: :csv) %>
+
+
+

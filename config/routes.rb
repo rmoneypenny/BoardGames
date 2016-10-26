@@ -21,6 +21,8 @@ Rails.application.routes.draw do
       post "boardList"
       get "import"
       post "import"
+      get "export"
+      post "export"
     end
   end
   resources :swboardnames

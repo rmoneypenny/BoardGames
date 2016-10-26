@@ -138,16 +138,26 @@ class SevenWonder < ApplicationRecord
 		winp.sort_by{|x,y|y}.reverse
 	end
 
-	def winper(names = self.getnames("all"))
+	def winper(names = self.getnames("all"), all = false)
 		p = []
 		names.each do |n|
-			t = SevenWonder.where(name: n).count
-			w = SevenWonder.where(name: n, win: true).count
-			p.push(((w.to_f/t.to_f)*100).round(1))
+			if all
+				if SevenWonder.where(name: n, :date => (1.year.ago..DateTime.now)).count == 0
+					p.push(0)
+				else
+					t = SevenWonder.where(name: n).count
+					w = SevenWonder.where(name: n, win: true).count
+					p.push(((w.to_f/t.to_f)*100).round(1))
+				end
+			else
+				t = SevenWonder.where(name: n).count
+				w = SevenWonder.where(name: n, win: true).count
+				p.push(((w.to_f/t.to_f)*100).round(1))
+			end
 		end
 		winp = names.zip(p)
+		puts winp
 		winp
-		#winp.sort_by{|x,y|y}.reverse
 	end
 
 	def playerStats
@@ -212,9 +222,19 @@ class SevenWonder < ApplicationRecord
 	def importCSV(file)
 
 		CSV.foreach(file.path) do |line|
-			SevenWonder.create(gamenumber: line[0].to_i, name: line[1], boardname: line[2], score: line[3].to_i, win: line[4] == "true" ? true : false, date: DateTime.parse(line[5]).change(:offset => "-0400"))
+			SevenWonder.create(gamenumber: line[0].to_i, name: line[1], boardname: line[2], score: line[3].to_i, win: line[4] == "true" ? true : false, date: DateTime.parse(line[5]))
 		end
 	end
+
+def self.to_csv
+ 	CSV.generate do |csv|
+ 		all.each do |game|
+		    values = game.attributes.values
+		    values.delete_at(0)
+      		csv.add_row values
+    	end
+  	end
+end
 
 	def numberOfGames(name)
 		s = SevenWonder.where(name: name).count
