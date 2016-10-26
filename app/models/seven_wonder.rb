@@ -1,7 +1,7 @@
 class SevenWonder < ApplicationRecord
 
 	require 'csv'
-	validates :score, presence: true
+	validates :score, presence: true, format: {with: /[0-9]/, message: "must be a number"}
 
 	def getnames(all="no")
 		if all == "all"
@@ -135,12 +135,10 @@ class SevenWonder < ApplicationRecord
 			t == 0 ? p.push(0) : p.push(((w.to_f/t.to_f)*100).round(1))
 		end
 		winp = a.zip(p)
-		puts winp
 		winp.sort_by{|x,y|y}.reverse
 	end
 
-	def winper
-		names = self.getnames
+	def winper(names = self.getnames("all"))
 		p = []
 		names.each do |n|
 			t = SevenWonder.where(name: n).count
@@ -148,7 +146,8 @@ class SevenWonder < ApplicationRecord
 			p.push(((w.to_f/t.to_f)*100).round(1))
 		end
 		winp = names.zip(p)
-		winp.sort_by{|x,y|y}.reverse
+		winp
+		#winp.sort_by{|x,y|y}.reverse
 	end
 
 	def playerStats
@@ -156,31 +155,52 @@ class SevenWonder < ApplicationRecord
 		highest = []
 		lowest = []
 		board = []
+		wp = []
 		names.each do |n|
 			highest.push(SevenWonder.where(name: n).maximum(:score))
 			lowest.push(SevenWonder.where(name: n).minimum(:score))
 			board.push(self.bestPlayerBoard(n))
+			wp.push(self.winper([n]))
 		end
-		names.zip(highest,lowest,board).sort_by{|x,y,z,a| y}.reverse
+		names.zip(highest,lowest,board,winper).sort_by{|x,y,z,a,b| b[1]}.reverse
 	end
 
 	def bestPlayerBoard(name)
-		winningGames = SevenWonder.where(name: name, win: true)
-		winningBoards = []
-		winningGames.each do |n|
-			winningBoards.push(n.boardname)
+
+		boards = self.allboards
+		n = 0
+		w = 0
+		p = 0
+		bn = ""
+		winper = 0
+		boards.each do |b|
+			n = SevenWonder.where(name: name, boardname: b).count
+			w = SevenWonder.where(name: name, boardname: b, win: true).count
+			p = ((w.to_f/n.to_f)*100).round(1)
+			 if p > winper 
+			 	winper = p
+			 	bn = b
+			 end
 		end
-		winningBoards.sort
-		uniqueboards = winningBoards.uniq
-		count = 0
-		name = ""
-		uniqueboards.each do |u|
-			if winningBoards.count(u) > count
-				count = winningBoards.count(u)
-				name = u
-			end
-		end
-		best = [name,count]
+		
+		[bn, winper]
+
+		# winningGames = SevenWonder.where(name: name, win: true)
+		# winningBoards = []
+		# winningGames.each do |n|
+		# 	winningBoards.push(n.boardname)
+		# end
+		# winningBoards.sort
+		# uniqueboards = winningBoards.uniq
+		# count = 0
+		# name = ""
+		# uniqueboards.each do |u|
+		# 	if winningBoards.count(u) > count
+		# 		count = winningBoards.count(u)
+		# 		name = u
+		# 	end
+		# end
+		# best = [name,count]
 	end
 
 	def allPlayerBoards(name)
@@ -196,6 +216,10 @@ class SevenWonder < ApplicationRecord
 		end
 	end
 
+	def numberOfGames(name)
+		s = SevenWonder.where(name: name).count
+		s
+	end
 
 end
 

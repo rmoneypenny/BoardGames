@@ -60,7 +60,10 @@ class SevenWondersController < ApplicationController
 
   def boardList
     @seven_wonder = SevenWonder.new()
+    @player_names = Player.new()  
     @names = params[:names]
+    @all = params[:all]
+
   end
 
   def import
