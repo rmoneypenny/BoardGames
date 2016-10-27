@@ -1,4 +1,6 @@
 
+<% import = true %>
+
 <% if @game == "SevenWonders" %>
 	
 	<p>
@@ -18,6 +20,30 @@
 	<%= link_to "Board List", boardList_seven_wonders_path %>
 	<br>
 	<br>
+	<% if import %>
+		<br>
+		<br>
+		<%= "Import Past Games" %>
+		<br>
+		<%=  form_tag import_seven_wonders_path, multipart: true do %>
+			<%= file_field_tag :swfile %>
+			<%= submit_tag "Submit" %>
+		<% end %>
+		<br>
+		<br>
+		<%= "Export Games" %>
+		<%= link_to "Export", export_seven_wonders_path(format: :csv) %>
+		<br>
+		<br>
+		<br>
+		<%= "Import Boards" %>
+		<br>
+		<%=  form_tag import_seven_wonders_path, multipart: true do %>
+			<%= file_field_tag :bnfile %>
+			<%= submit_tag "Submit" %>
+		<% end %>
+	<% end %>
+
 </p>
 
 <% end %>

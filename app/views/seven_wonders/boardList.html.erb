@@ -22,17 +22,7 @@
 <br>
 <%= link_to "Back", boardgame_index_path(:game => "SevenWonders") %>
 <br>
-<br>
-<br>
-<br>
 
-
-	<%= "Import Boards" %>
-	<br>
-	<%=  form_tag import_seven_wonders_path, multipart: true do %>
-		<%= file_field_tag :bnfile %>
-		<%= submit_tag "Submit" %>
-	<% end %>
 <% if false %>
 
 <% end %>

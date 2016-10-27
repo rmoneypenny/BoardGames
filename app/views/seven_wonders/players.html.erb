@@ -35,18 +35,7 @@
 <%= link_to "Back", boardgame_index_path(:game => "SevenWonders") %>
 <br>
 <br>
-<br>
-<br>
-<%= "Import Past Games" %>
-<br>
-<%=  form_tag import_seven_wonders_path, multipart: true do %>
-	<%= file_field_tag :swfile %>
-	<%= submit_tag "Submit" %>
-<% end %>
-<br>
-<br>
-<%= "Export Games" %>
-<%= link_to "Export", export_seven_wonders_path(format: :csv) %>
+
 
 
 
