@@ -1,6 +1,6 @@
 
 <%= render partial: "nameList", locals: {:pathname => players_seven_wonders_path} %>
-<% chance = 50 %>
+<% chance = 10 %>
 
 <br>
 <br>
@@ -11,7 +11,7 @@
 			<%= label_tag("Name: ") %>
 			<%= text_field_tag("name[]", name, readonly: true) %>
 			<br>
-			<% if rand(100) < chance %>
+			<% if name == "Ashley" || rand(100) < chance %>
 				<%= label_tag("Boardname: ") %>
 				<%= select_tag("boardname[]", options_for_select(@seven_wonder.allboards)) %>
 			<% else %>
@@ -24,7 +24,7 @@
 			<br>
 			<br>
 		<% end %>	
-		<%= submit_tag("Submit") %>	
+		<%= submit_tag("Submit", :name => 'submit') %>	
 	<% end %>
 	<br>	
 <% elsif @names %>
