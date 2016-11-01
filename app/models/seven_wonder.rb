@@ -6,6 +6,8 @@ class SevenWonder < ApplicationRecord
 	def getnames(all="no")
 		if all == "all"
 			SevenWonder.pluck("DISTINCT name")
+		elsif all=="year"
+			SevenWonder.where(:date => (1.year.ago..DateTime.now)).pluck("DISTINCT name")
 		else
 			SevenWonder.where(:date => (30.days.ago..DateTime.now)).pluck("DISTINCT name")
 		end
@@ -156,12 +158,15 @@ class SevenWonder < ApplicationRecord
 			end
 		end
 		winp = names.zip(p)
-		puts winp
 		winp
 	end
 
-	def playerStats
-		names = self.getnames("all")
+	def playerStats(all = false)
+		if all
+			names = self.getnames("all")
+		else
+			names = self.getnames("year")
+		end
 		highest = []
 		lowest = []
 		board = []
@@ -172,7 +177,8 @@ class SevenWonder < ApplicationRecord
 			board.push(self.bestPlayerBoard(n))
 			wp.push(self.winper([n]))
 		end
-		names.zip(highest,lowest,board,winper).sort_by{|x,y,z,a,b| b[1]}.reverse
+		puts names
+		names.zip(highest,lowest,board,winper(names)).sort_by{|x,y,z,a,b| b[1]}.reverse
 	end
 
 	def bestPlayerBoard(name)

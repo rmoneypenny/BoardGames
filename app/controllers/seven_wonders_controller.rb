@@ -56,6 +56,7 @@ class SevenWondersController < ApplicationController
 
   def user
     @seven_wonder = SevenWonder.new()
+    @all = params[:all]
   end
 
   def boardList

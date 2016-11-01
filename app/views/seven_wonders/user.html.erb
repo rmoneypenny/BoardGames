@@ -9,7 +9,7 @@
 		<th> Board Win% </th>
 		<th> Games Played </th>
 	</tr>
-	<% @seven_wonder.playerStats.each do |stat| %>
+	<% @seven_wonder.playerStats(@all).each do |stat| %>
 	<tr>
 		<td> <%= stat[0] %> </td>
 		<td> <%= stat[4][1] %>% </td>
@@ -22,7 +22,9 @@
 	</tr>
 	<% end %>
 </table>
-
+<br>
+<br>
+<%= button_to "All", user_seven_wonders_path(:all => true) %>
 <br>
 <br>
 <br>
