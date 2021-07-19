@@ -1,1 +1,1 @@
-This is a test project I used to learn Ruby on Rails. It's a board randomizer, score keeper, and stat tracker for the board game Seven Wonders and while the code is a mess, it served as a good learning experience and jumping off point so I'm leaving it up and public. 
+ 
